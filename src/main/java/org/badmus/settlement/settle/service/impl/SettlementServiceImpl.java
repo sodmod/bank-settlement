@@ -11,10 +11,7 @@ import org.badmus.settlement.settle.enums.SettlementEnum;
 import org.badmus.settlement.settle.model.Settlement;
 import org.badmus.settlement.settle.repo.SettlementRepository;
 import org.badmus.settlement.settle.service.SettlementService;
-import org.badmus.settlement.transaction.model.Transaction;
 import org.badmus.settlement.transaction.repo.TransactionRepository;
-import org.badmus.settlement.transaction.service.TransactionService;
-import org.badmus.settlement.utils.ByteArrayMultipartFile;
 import org.badmus.settlement.utils.GeneralUtils;
 import org.badmus.settlement.utils.MultipartUtils;
 import org.springframework.core.io.ByteArrayResource;
@@ -34,7 +31,6 @@ public class SettlementServiceImpl implements SettlementService {
     private final TransactionRepository transactionRepository;
     private final KafkaProducerService kafkaProducerService;
     private final SettlementRepository settlementRepository;
-
 
 
     @Override
@@ -61,7 +57,7 @@ public class SettlementServiceImpl implements SettlementService {
 
         // todo: loop through the list and implement validation and save logic
         excelDTO.forEach(settlementExcelDto -> {
-            if(!transactionRepository.existsByRrnAndTransactionId(settlementExcelDto.getRrn(),
+            if (!transactionRepository.existsByRrnAndTransactionId(settlementExcelDto.getRrn(),
                     settlementExcelDto.getTransactionId())) {
                 return;
             }
@@ -81,10 +77,5 @@ public class SettlementServiceImpl implements SettlementService {
             return originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
         }
         return "";
-    }
-
-    private void confirmSettlement(SettlementExcelDto settlementExcelDto) {
-
-
     }
 }

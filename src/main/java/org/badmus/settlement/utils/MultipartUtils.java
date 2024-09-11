@@ -26,7 +26,7 @@ public class MultipartUtils {
     public <K> List<K> convertExcelToDTO(ByteArrayResource byteArrayResource, Class<K> type, String excelType) {
         log.info("converting excel to DTO for {}...", type.getName());
 
-        List<K> excelDTO = new ArrayList<>();
+        List<K> excelDTO;
         try {
             excelDTO = switch (excelType) {
                 case "xlsx", "xls", "csv" -> Poiji.fromExcel(byteArrayResource.getInputStream(),
