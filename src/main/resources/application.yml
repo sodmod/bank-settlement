@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: bank-settlement
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: sodmod
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

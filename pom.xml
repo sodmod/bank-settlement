@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.badmus</groupId>
-    <artifactId>settlement-project-with-kimono</artifactId>
+    <artifactId>bank-settlement</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>settlement-project-with-kimono</name>
-    <description>settlement-project-with-kimono</description>
+    <name>bank-settlement</name>
+    <description>bank-settlement</description>
     <url/>
     <licenses>
         <license/>
@@ -78,6 +78,7 @@
     </dependencies>
 
     <build>
+        <finalName>bank-settlement</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
