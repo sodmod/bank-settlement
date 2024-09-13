@@ -9,14 +9,14 @@ public class SettlementExcelDto {
 
     private String terminalId;
     private String rrn;
-    private String processor;
+    private String processorType;
     private String respondCode;
     private String transactionId;
 
     public String toString() {
         return "{terminalId\": " + terminalId +
                 ", rrn: " + rrn +
-                ", processor: " + processor +
+                ", processor: " + processorType +
                 ", respondCode: " + respondCode +
                 ", transactionId: " + transactionId +
                 "}";

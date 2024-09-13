@@ -1,8 +1,6 @@
 package org.badmus.settlement.settle.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.badmus.settlement.settle.enums.SettlementEnum;
 
@@ -21,6 +19,8 @@ public class Settlement {
     private String title;
     private String description;
     private SettlementEnum settlementEnum;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Dispute dispute;
 
     public String toString() {
         return "{" +

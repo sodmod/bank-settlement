@@ -21,7 +21,7 @@ public class GeneralUtils {
         try {
             return objectMapper.readValue(jsonString, clazz);
         } catch (Exception e) {
-            throw new RuntimeException("Error while converting string to object", e);
+            throw new RuntimeException("Error while converting string to object class", e);
         }
     }
 }

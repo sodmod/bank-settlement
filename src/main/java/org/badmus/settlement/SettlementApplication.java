@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Settlement {
+public class SettlementApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Settlement.class, args);
+        SpringApplication.run(SettlementApplication.class, args);
     }
 
 }

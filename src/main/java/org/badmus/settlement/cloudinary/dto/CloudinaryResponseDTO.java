@@ -9,4 +9,5 @@ public class CloudinaryResponseDTO implements Serializable {
 
     private String fileId;
     private String secureUrl;
+    private String responseMessage;
 }

@@ -9,4 +9,5 @@ import java.io.Serializable;
 public class SettlementDTO implements Serializable {
     private String publicId;
     private MultipartFile file;
+    private String processorType;
 }

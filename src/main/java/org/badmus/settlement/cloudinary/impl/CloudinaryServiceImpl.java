@@ -1,21 +1,14 @@
 package org.badmus.settlement.cloudinary.impl;
 
 import com.cloudinary.Cloudinary;
-import com.poiji.bind.Poiji;
-import com.poiji.exception.PoijiExcelType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.badmus.settlement.cloudinary.dto.CloudinaryResponseDTO;
-import org.badmus.settlement.dto.SettlementDTO;
 import org.badmus.settlement.cloudinary.CloudinaryService;
+import org.badmus.settlement.dto.SettlementDTO;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.HashMap;
@@ -42,12 +35,14 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
         String public_id;
 
-        if(settlementDTO.getPublicId().isEmpty()){
+        if (settlementDTO.getPublicId().isEmpty()) {
             public_id = settlementDTO.getPublicId();
-        }else{
+        } else {
             public_id = generateString();
         }
 
+        // Create an instance of the generic class `K`
+        K instance = null;
         try {
             mapObjectObject.put("folder", settlementDTO.getFile().getOriginalFilename());
             mapObjectObject.put("public_id", public_id);
@@ -56,43 +51,42 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
             Map map = cloudinary.uploader().uploadLarge(settlementDTO.getFile().getBytes(), mapObjectObject);
 
-            // Create an instance of the generic class `K`
-            K instance = classType.getDeclaredConstructor().newInstance();
+            instance = classType.getDeclaredConstructor().newInstance();
 
-            Method setFileId = classType.getMethod("setFileId", String.class);
-            setFileId.invoke(instance, map.get("public_id").toString());
-
-            Method setSecureUrl = classType.getMethod("setSecureUrl", String.class);
-            setSecureUrl.invoke(instance, map.get("secure_url").toString());
+            setProperty(instance, classType, "setSecureUrl", map.get("secure_url").toString());
+            setProperty(instance, classType, "setFileId", map.get("public_id").toString());
+            setProperty(instance, classType, "setResponseMessage", "SUCCESS");
 
             responseDTOMap.put("response", instance);
-
             log.info("uploaded successfully");
-        } catch (IOException e) {
-            //  send failure message
-            log.error(e.getMessage());
+        } catch (Exception e) {
+            if (instance != null) {
+                try {
+                    log.info("There is an error but updating map property ResponseMessage to FAILURE");
+                    setProperty(instance, classType, "setResponseMessage", "FAILURE");
+                    responseDTOMap.put("response", instance);
+                } catch (Exception reflectionException) {
+                    log.error("Reflection error: {}", reflectionException.getMessage());
+                }
+            }
+            log.error("There is an error {}", e.getMessage());
             throw new RuntimeException("could not upload file");
-        } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
         }
-
         return responseDTOMap;
     }
 
     @Override
     public ByteArrayResource download(String cloudUrl) {
-
         try {
             // Get a ByteArrayResource from the URL
             URL url = new URL(cloudUrl);
             InputStream inputStream = url.openStream();
             byte[] out = toByteArray(inputStream);
-            ByteArrayResource resource = new ByteArrayResource(out);
 
-           return resource;
+            return new ByteArrayResource(out);
 
         } catch (Exception ex) {
-            log.error("FAILED to download the file: {}" , "");
+            log.error("FAILED to download the file: {}", "");
             return null;
         }
     }
@@ -115,6 +109,9 @@ public class CloudinaryServiceImpl implements CloudinaryService {
         }
     }
 
-
+    private <K> void setProperty(K instance, Class<K> classType, String methodName, String value) throws Exception {
+        Method method = classType.getMethod(methodName, String.class);
+        method.invoke(instance, value);
+    }
 
 }
