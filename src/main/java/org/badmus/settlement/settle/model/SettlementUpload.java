@@ -17,8 +17,8 @@ public class SettlementUpload {
     private long id;
     private int excelRows;
     private String fileName;
+    private String errorMessage;
     private String processorType;
     private SettlementUploadStatusEnum settlementUploadStatusEnum;
-    private String errorMessage;
 
 }

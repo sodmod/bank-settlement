@@ -18,6 +18,7 @@ public class Settlement {
     private long id;
     private String title;
     private String description;
+    @Enumerated(EnumType.STRING)
     private SettlementEnum settlementEnum;
     @OneToOne(cascade = CascadeType.ALL)
     private Dispute dispute;

@@ -14,7 +14,6 @@ public class KafkaProducerProducerServiceImpl implements KafkaProducerService {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-
     @Override
     public void sendMessageToTopic(String topic, String message) {
         CompletableFuture<SendResult<String, Object>> completableFuture = kafkaTemplate.send(topic, 2,

@@ -18,6 +18,6 @@ public class SettlementController {
     @PostMapping
     public ResponseEntity<?> postSettlement(@ModelAttribute SettlementDTO settlementDTO) {
         settlementService.postSettlement(settlementDTO);
-        return null;
+        return ResponseEntity.ok().build();
     }
 }

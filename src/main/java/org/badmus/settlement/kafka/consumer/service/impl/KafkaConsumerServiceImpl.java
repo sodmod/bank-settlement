@@ -20,9 +20,6 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
 
     private final SettlementService settlementService;
 
-
-
-
     @Override
     @KafkaListener(topics = {"settlement-consumer"}, groupId = "settlement",
             topicPartitions = {@TopicPartition(topic = "topic-name", partitions = {"1", "2"})})

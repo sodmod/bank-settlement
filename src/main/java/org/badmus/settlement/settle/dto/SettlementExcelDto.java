@@ -7,11 +7,12 @@ import lombok.Setter;
 @Setter
 public class SettlementExcelDto {
 
-    private String terminalId;
     private String rrn;
-    private String processorType;
+    private String terminalId;
     private String respondCode;
     private String transactionId;
+    private String processorType;
+
 
     public String toString() {
         return "{terminalId\": " + terminalId +

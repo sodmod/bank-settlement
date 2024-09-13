@@ -40,13 +40,12 @@ import static org.badmus.settlement.settle.enums.SettlementEnum.SETTLED;
 public class SettlementServiceImpl implements SettlementService, SettlementUploadService, DisputeService {
 
     private final MultipartUtils multipartUtils;
-    private final DisputeRepository disputeRepository;
     private final CloudinaryService cloudinaryService;
+    private final DisputeRepository disputeRepository;
     private final KafkaProducerService kafkaProducerService;
     private final SettlementRepository settlementRepository;
     private final TransactionRepository transactionRepository;
     private final SettlementUploadRepository settlementUploadRepository;
-
 
     @Override
     public void postSettlement(@ModelAttribute SettlementDTO settlementDTO) {
